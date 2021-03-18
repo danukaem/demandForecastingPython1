@@ -10,9 +10,9 @@
         "Good day"
       ],
       "responses": [
+        "Hi there, how can I help?",
         "Hello, thanks for visiting",
-        "Good to see you again",
-        "Hi there, how can I help?"
+        "Good to see you again"
       ],
       "context_set": ""
     },
@@ -961,6 +961,5 @@
         ""
       ]
     }
-
   ]
 }
