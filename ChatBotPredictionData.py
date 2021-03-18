@@ -24,12 +24,10 @@ train_y = chat_csv[
     {'item_category', 'item_discount', 'order_quantity', 'item_price', 'order_total_amount', 'order_status'}]
 train_x = chat_csv[{'gender', 'chat_member'}]
 
-print('train_y  ', train_y)
 bag_x = []
 classes = pickle.load(open('classes.pkl', 'rb'))
 for chat_row in chat_column:
     bag = []
-    print(chat_row)
     word_list = nltk.word_tokenize(chat_row)
     word_list = [porter.stem(word) for word in word_list if word not in ignore_letters]
     word_list = sorted(set(word_list))
@@ -39,10 +37,6 @@ for chat_row in chat_column:
 bag_x = np.array(bag_x)
 train_x = np.concatenate([train_x, bag_x], axis=1)
 train_y = np.array(train_y)
-print(train_x.shape)
-print(train_y.shape)
-print(len(train_x[0]))
-print('train x[0] :  ', train_x[0])
 testx = []
 testx = train_x[0]
 model = keras.models.Sequential()
@@ -55,8 +49,7 @@ model.add(keras.layers.Dense(len(train_y[0])))
 model.compile(optimizer='adam', loss='mean_squared_error', metrics='accuracy')
 
 model.fit(train_x, train_y, epochs=30, callbacks=[keras.callbacks.EarlyStopping(patience=3)])
-# test_data = np.array([2003, 854, 1710, 2, 1, 3, 8, 2008])
-#
+
 predicted_data = model.predict(testx.reshape(1, len(train_x[0])), batch_size=1)
 print(train_y[0])
 print(predicted_data)
